@@ -1,60 +1,69 @@
-#include <iostream>
-using namespace std;
-
-class bT {
-    struct node {
+public class BinaryTree {
+    // Node class
+    static class Node {
         int data;
-        node* left;
-        node* right;
-        node(int val) : data(val), left(NULL), right(NULL) {}
-    };
+        Node left, right;
 
-    node* root;
-
-    node* insert(node* root, int item) {
-        if (root == NULL) {
-            return new node(item);
+        Node(int item) {
+            data = item;
+            left = right = null;
         }
-        if (item < root->data) {
-            root->left = insert(root->left, item);
-        } else if (item > root->data) {
-            root->right = insert(root->right, item);
+    }
+
+    Node root;
+
+    // Constructor
+    BinaryTree() {
+        root = null;
+    }
+
+    // Insert method
+    Node insert(Node root, int item) {
+        if (root == null) {
+            root = new Node(item);
+            return root;
+        }
+        if (item < root.data) {
+            root.left = insert(root.left, item);
+        } else if (item > root.data) {
+            root.right = insert(root.right, item);
         }
         return root;
     }
 
-    public:
-    bT() : root(NULL) {}
-
+    // Public method to insert into tree
     void insert(int item) {
         root = insert(root, item);
     }
 
-    void inorder(node* temp) {
-        if (temp == NULL) return;
-        inorder(temp->left);
-        cout << temp->data << " ";
-        inorder(temp->right);
+    // Inorder traversal
+    void inorder(Node root) {
+        if (root != null) {
+            inorder(root.left);
+            System.out.print(root.data + " ");
+            inorder(root.right);
+        }
     }
 
+    // Display tree
     void display() {
         inorder(root);
-        cout << endl;
+        System.out.println();
     }
-};
 
-int main() {
-    bT tree;
-    tree.insert(50);
-    tree.insert(30);
-    tree.insert(70);
-    tree.insert(20);
-    tree.insert(40);
-    tree.insert(60);
-    tree.insert(80);
+    // Main method
+    public static void main(String[] args) {
+        BinaryTree tree = new BinaryTree();
 
-    cout << "Inorder traversal of the binary search tree:\n";
-    tree.display();
+        tree.insert(50);
+        tree.insert(30);
+        tree.insert(70);
+        tree.insert(20);
+        tree.insert(40);
+        tree.insert(60);
+        tree.insert(80);
 
-    return 0;
+        System.out.println("Inorder traversal of the binary search tree:");
+        tree.display();
+    }
 }
